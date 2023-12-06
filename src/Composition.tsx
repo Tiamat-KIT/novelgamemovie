@@ -1,9 +1,9 @@
-import {AbsoluteFill} from 'remotion';
-import {Logo} from './Logo';
-import {Subtitle} from './Subtitle';
-import {Title} from './Title';
+import {AbsoluteFill, Sequence} from 'remotion';
 import {z} from 'zod';
 import {zColor} from '@remotion/zod-types';
+
+import NovelLikeText from './NovelLikeText';
+import { Title } from './Title';
 
 export const myCompSchema = z.object({
 	titleText: z.string(),
@@ -11,18 +11,44 @@ export const myCompSchema = z.object({
 	logoColor: zColor(),
 });
 
-export const MyComposition: React.FC<z.infer<typeof myCompSchema>> = ({
+type StoryText = {
+	text: string,
+	person: string
+}
+
+export const MyComposition/* : React.FC<z.infer<typeof myCompSchema>> */ = (/* {
 	titleText: propOne,
 	titleColor: propTwo,
 	logoColor: propThree,
-}) => {
+} */) => {
+	const DefaultFrame = 100
+	const person = "うたかたくん"
+	const StoryContent:Story[] = [
+		{
+			text: "今日のごはんはどうしようか",
+			person
+		},{
+			text: "ランチで特にめぼしいおかずもないな...",
+			person
+		},{
+			text: "今日もかつ丼にするか...",
+			person
+		}
+	]
 	return (
-		<AbsoluteFill className="bg-gray-100 items-center justify-center">
-			<div className="m-10" />
-			<Logo logoColor={propThree} />
-			<div className="m-3" />
-			<Title titleText={propOne} titleColor={propTwo} />
-			<Subtitle />
+		<AbsoluteFill className="bg-[url('../public/Gray/1.png')] min-h-screen bg-cover">
+			<Sequence durationInFrames={DefaultFrame} >
+				<Title titleText='昨日未明' titleColor='white' />
+			</Sequence>
+			{StoryContent.map((content,index) => {
+				const AddPadding = index
+				return (
+				<Sequence key={index} from={DefaultFrame * index}>
+					<NovelLikeText text={content.text} human={content.person} AddPadding={AddPadding} />
+				</Sequence>
+				)
+			})}
+			
 		</AbsoluteFill>
 	);
 };
