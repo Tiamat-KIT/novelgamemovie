@@ -2,7 +2,6 @@
 module.exports = {
 	mode: "jit",
 	content: ['./src/**/*.{ts,tsx}'],
-	plugins: [],
 	theme: {
 		extend: {
 			keyframes: {
@@ -16,16 +15,20 @@ module.exports = {
 				  }  
 				},
 				blink: {
-				  "50%": {
-					borderColor: "transparent"
-				  },
-				  "100%": {
-					borderColor: "white"
-				  }  
-				}
+						"50%": {
+							borderColor: "transparent"
+						},
+						"90%": {
+							borderColor: "white"
+						},
+						"100%": {
+							borderColor: "transparent",
+							animationPlayState:"paused"
+						}
+					}
 			  },
 			  animation: {
-				typing: "typing 3s infinite alternate, blink .2s infinite"
+					typing: "typing 3s, blink .2s infinite"
 			  }
 		}
 	}
